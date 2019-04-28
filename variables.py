@@ -23,7 +23,9 @@ class VariablesContainer(dict):
                 'store': set(),  # from store to store
                 'outlet': set()  # from store to outlet
             }}
-        self['store_storage'] = set()
+        self['storage'] = {
+            'stores': set(),
+            'warehouse': set()}
 
     def set_all(self, model: Model, periods: int=12):
         '''
@@ -46,16 +48,19 @@ class VariablesContainer(dict):
 
     def _set_storage(self, model: Model, periods: int):
         for i in range(periods):
-            for s in self.parameters['stores']:
-                for p in self.parameters['products']:
+            for p in self.parameters['products']:
+                for s in self.parameters['stores']:
                     name = 'stock_{0}_at_{1}_in_{2}'.format(
                         p.id_,
                         s.id_,
                         i)
-                    self['store_storage'] = model.addVar(
+                    self['storage']['stores'] = model.addVar(
                         vtype=GRB.INTEGER, lb=0, name=name)
-            self.warehouse_storage = model.addVar(
-                vtype=GRB.INTEGER, lb=0, name=f'stock_at_warehouse_in_{i}')
+                name = 'stock_{0}_at_warehouse_in_{1}'.format(
+                    p.id_,
+                    i)
+                self['storage']['warehouse'] = model.addVar(
+                    vtype=GRB.INTEGER, lb=0, name=name)
 
 
 if __name__ == "__main__":
