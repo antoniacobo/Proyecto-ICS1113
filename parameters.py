@@ -62,6 +62,7 @@ class ParametersContainer(defaultdict):
     def _load_all(self, PATHS: dict):
         for name, path in PATHS.items():
             with open(path, 'r') as file:
+                file.readline()  # skip header
                 for line in file.readlines():
                     self[name.lower()].add(self._new_parameter(name, line))
 
