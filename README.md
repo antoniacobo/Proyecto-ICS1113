@@ -1,2 +1,3 @@
-# Proyecto-ICS1113
-Proyecto de optimización de la cadena de suministro de Guess.
+# Proyecto-ICS1113 (Python-Gurobi)
+
+Proyecto de optimización de la cadena de suministro de _Guess_.
