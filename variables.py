@@ -61,6 +61,5 @@ if __name__ == "__main__":
     variables = VariablesContainer(parameters)
     model = Model()
     variables.set_all(model, 12)
-    # model.addVar(vtype=GRB.INTEGER, name='a')
     model.update()
     print(len(model.getVars()))
