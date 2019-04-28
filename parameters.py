@@ -89,8 +89,9 @@ class ParameterContainer(dict):
 
 
 if __name__ == "__main__":
-    parameters = ParameterContainer()
     with open('data/PATHS.json') as file:
         PATHS = json_load(file)
+
+    parameters = ParameterContainer()
     parameters.load_all(PATHS)
-    print(parameters)
+    # print(parameters)
