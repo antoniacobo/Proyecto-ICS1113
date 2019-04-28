@@ -1,0 +1,7 @@
+{
+  "PRODUCTS": "data/products.csv",
+  "STORES": "data/stores.csv",
+  "TRANSPORTATION": "data/transportation.csv",
+  "DEMAND": "data/demand.csv",
+  "ARRIVALS": "data/arrivals.csv"
+}
