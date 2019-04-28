@@ -48,6 +48,5 @@ if __name__ == "__main__":
     model = Model('Guess')
     variables.set_all(model)
 
-
     model.update()
     model.optimize()
