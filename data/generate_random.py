@@ -29,7 +29,7 @@ def generate_transportation(transportation_n: int):
                        f'{randint(5000, 10000)},'
                        f'{randint(1000, 20000)},'
                        f'{choice(["port", "warehouse", "store"])},'
-                       f'{choice(["outlet", "warehouse", "store"])}\n')
+                       f'{choice(["warehouse", "store", "outlet"])}\n')
 
 
 def generate_demand(periods_n: int, stores_n: int, products_n: int):
