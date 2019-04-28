@@ -33,11 +33,6 @@ def set_restrictions(model: Model):
     No llegan productos a una bodega desde otra si no se utiliz ́o transporte.
     '''
 
-    '''
-    Las variables tienen una determinada naturaleza,
-    que debe ser respetada por el modelo.
-    '''
-
 
 if __name__ == "__main__":
     with open('data/PATHS.json') as file:

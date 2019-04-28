@@ -42,7 +42,7 @@ class VariablesContainer(dict):
                     t.to,
                     t.id_)
                 self['transportation'][t.from_][t.to] = model.addVar(
-                    vtype=GRB.INTEGER, name=name)
+                    vtype=GRB.INTEGER, lb=0, name=name)
 
     def _set_storage(self, model: Model, periods: int):
         for i in range(periods):
@@ -53,9 +53,9 @@ class VariablesContainer(dict):
                         s.id_,
                         i)
                     self['store_storage'] = model.addVar(
-                        vtype=GRB.INTEGER, name=name)
+                        vtype=GRB.INTEGER, lb=0, name=name)
             self.warehouse_storage = model.addVar(
-                vtype=GRB.INTEGER, name=f'stock_at_warehouse_in_{i}')
+                vtype=GRB.INTEGER, lb=0, name=f'stock_at_warehouse_in_{i}')
 
 
 if __name__ == "__main__":
