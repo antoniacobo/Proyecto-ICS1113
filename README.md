@@ -30,6 +30,8 @@ Las variables pueden ser determinadas a partir de las instancias.
 ```python
 variables = VariablesContainer(parameters)  # esto es un contenedor vacío
 variables.set_all(model)  # esto crea las variables y las agrega tanto a `variables` como a `model`
+
+model.addVar(variable)  # esto es lo que hace `VariablesContainer` para añadir cada una de las variables al modelo
 ```
 
 ### ¿Dónde están las variables?
