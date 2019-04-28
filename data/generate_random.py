@@ -25,8 +25,7 @@ def generate_transportation(transportation_n: int):
         file.write('id,capacity(m^2),fix_price,var_price,from,to\n')
         for i in range(transportation_n):
             file.write(f't{i},'
-                       f'{randint(1, 15)}'
-                       f'{randint(1, 20)}'
+                       f'{randint(1, 15)},'
                        f'{randint(5000, 10000)},'
                        f'{randint(1000, 20000)},'
                        f'{choice(["port", "warehouse", "store"])},'
