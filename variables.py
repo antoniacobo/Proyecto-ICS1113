@@ -54,6 +54,8 @@ class VariablesContainer(dict):
                         i)
                     self['store_storage'] = model.addVar(
                         vtype=GRB.INTEGER, name=name)
+            self.warehouse_storage = model.addVar(
+                vtype=GRB.INTEGER, name=f'stock_at_warehouse_in_{i}')
 
 
 if __name__ == "__main__":
