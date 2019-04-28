@@ -1,3 +1,6 @@
+from json import load as json_load
+
+
 class Product:
     def __init__(self, id_: str, volume_cm2: int, season_duration: int):
         self.id_ = id_
@@ -43,7 +46,7 @@ class Demand:
         self.amount = amount
 
 
-class Arrivals:
+class Arrival:
     def __init__(self, period: int, product_id: str, amount: int):
         self.period = period
         self.product_id = product_id
@@ -60,20 +63,33 @@ class ParameterContainer(dict):
         self['products'] = []
         self['arrivals'] = []
 
-    def load_parameters(self, PATHS: str):
-        pass
+    def load_all(self, PATHS: dict):
+        for name, path in PATHS.items():
+            with open(path, 'r') as file:
+                for line in file.readlines():
+                    self[name.lower()] = self._new_parameter(name, line)
 
-    def _load_products(self, path: str):
-        pass
+    @staticmethod
+    def _new_parameter(name: str, csv_line: str):
+        data = map(lambda x: int(x) if x.isdecimal() else x,
+                   csv_line.strip().split(','))
 
-    def _load_stores(self, path: str):
-        pass
+        if name == 'PRODUCTS':
+            return Product(*data)
+        elif name == 'STORES':
+            return Store(*data)
+        elif name == 'TRANSPORTATION':
+            return Transportation(*data)
+        elif name == 'DEMAND':
+            return Demand(*data)
+        elif name == 'ARRIVALS':
+            return Arrival(*data)
 
-    def _load_transportation(self, path: str):
-        pass
+        raise TypeError(f"invalid parameter of type '{name}'")
 
-    def _load_demand(self, path: str):
-        pass
 
-    def _load_arrivals(self, path: str):
-        pass
+if __name__ == "__main__":
+    parameters = ParameterContainer()
+    with open('data/PATHS.json') as file:
+        PATHS = json_load(file)
+    parameters.load_all(PATHS)
