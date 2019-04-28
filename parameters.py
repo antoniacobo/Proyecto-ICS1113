@@ -67,7 +67,7 @@ class ParameterContainer(dict):
         for name, path in PATHS.items():
             with open(path, 'r') as file:
                 for line in file.readlines():
-                    self[name.lower()] = self._new_parameter(name, line)
+                    self[name.lower()].append(self._new_parameter(name, line))
 
     @staticmethod
     def _new_parameter(name: str, csv_line: str):
@@ -93,3 +93,4 @@ if __name__ == "__main__":
     with open('data/PATHS.json') as file:
         PATHS = json_load(file)
     parameters.load_all(PATHS)
+    print(parameters)
