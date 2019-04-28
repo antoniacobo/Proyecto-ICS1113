@@ -34,7 +34,8 @@ def set_restrictions(model: Model):
     '''
 
     '''
-    Las variables tienen una determinada naturaleza, que debe ser respetada por el modelo.
+    Las variables tienen una determinada naturaleza,
+    que debe ser respetada por el modelo.
     '''
 
 
