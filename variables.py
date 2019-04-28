@@ -26,6 +26,9 @@ class VariablesContainer(dict):
         self['store_storage'] = set()
 
     def set_all(self, model: Model, periods: int=12):
+        '''
+        Add all variables to model.
+        '''
         for _, method in filter(lambda x: x[0][:4] == '_set',
                                 VariablesContainer.__dict__.items()):
             method(self, model, periods)

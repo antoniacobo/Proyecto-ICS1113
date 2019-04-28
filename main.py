@@ -6,7 +6,7 @@ from variables import VariablesContainer
 
 def set_restrictions(model: Model):
     '''
-    Set all model restrictions.
+    Set all constrains to model.
     '''
     pass
 
