@@ -43,7 +43,7 @@ variables['storage']  # acá se enceuntran las variables que indican cuánto pro
 variables['transportation']['desde']['hasta']  # esto es un ejemplo
 ```
 
-### Añadir restricciones
+### Añadir restricciones.
 
 ```python
 for restricción in restricciones:  # una opción
@@ -52,7 +52,7 @@ for restricción in restricciones:  # una opción
 model.addConstrs((restricción for restricción in restricciones))  # otra opción
 ```
 
-### Actualizar modelo y optimizar
+### Actualizar modelo y optimizar.
 
 ```python
 model.update()
