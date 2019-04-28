@@ -45,9 +45,9 @@ variables['transportation']['desde']['hasta']  # esto es un ejemplo
 
 ```python
 for restricción in restricciones:  # una opción
-  model.addContr(restricción)
+  model.addConstr(restricción)
 
-model.addConstr((restricción for restricción in restricciones))  # otra opción
+model.addConstrs((restricción for restricción in restricciones))  # otra opción
 ```
 
 ### Actualizar modelo y optimizar
