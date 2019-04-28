@@ -1,3 +1,4 @@
+from collections import defaultdict
 from json import load as json_load
 
 
@@ -53,21 +54,16 @@ class Arrival:
         self.amount = amount
 
 
-class ParameterContainer(dict):
-    def __init__(self):
-        super().__init__()
-        self['products'] = []
-        self['stores'] = []
-        self['transportation'] = []
-        self['demand'] = []
-        self['products'] = []
-        self['arrivals'] = []
+class ParametersContainer(defaultdict):
+    def __init__(self, PATHS: dict):
+        super().__init__(set)
+        self._load_all(PATHS)
 
-    def load_all(self, PATHS: dict):
+    def _load_all(self, PATHS: dict):
         for name, path in PATHS.items():
             with open(path, 'r') as file:
                 for line in file.readlines():
-                    self[name.lower()].append(self._new_parameter(name, line))
+                    self[name.lower()].add(self._new_parameter(name, line))
 
     @staticmethod
     def _new_parameter(name: str, csv_line: str):
@@ -92,6 +88,5 @@ if __name__ == "__main__":
     with open('data/PATHS.json') as file:
         PATHS = json_load(file)
 
-    parameters = ParameterContainer()
-    parameters.load_all(PATHS)
-    # print(parameters)
+    parameters = ParametersContainer(PATHS)
+    print(parameters)
