@@ -1,4 +1,4 @@
-from gurobipy import Model, GRB
+from gurobipy import Model, quicksum
 from json import load as json_load
 from parameters import ParametersContainer
 from variables import VariablesContainer
@@ -14,6 +14,7 @@ def set_restrictions(model: Model):
     Se debe conservar el flujo de productos las tiendas,
     satisfaciendo, a la vez, la demanda de cada una.
     '''
+
 
     '''
     No es posible superar la capacidad m ́axima de cada tienda.
