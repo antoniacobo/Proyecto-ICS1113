@@ -4,6 +4,40 @@ from parameters import ParametersContainer
 from variables import VariablesContainer
 
 
+def set_restrictions(model: Model):
+    '''
+    Set all model restrictions.
+    '''
+    pass
+
+    '''
+    Se debe conservar el flujo de productos las tiendas,
+    satisfaciendo, a la vez, la demanda de cada una.
+    '''
+
+    '''
+    No es posible superar la capacidad m ́axima de cada tienda.
+    '''
+
+    '''
+    Los medios de transporte no pueden transportar
+    m ́as que su capacidad volum ́etrica m ́axima.
+    '''
+
+    '''
+    Al finalizar cada temporada, los productos deben ser llevados al
+    outlet.
+    '''
+
+    '''
+    No llegan productos a una bodega desde otra si no se utiliz ́o transporte.
+    '''
+
+    '''
+    Las variables tienen una determinada naturaleza, que debe ser respetada por el modelo.
+    '''
+
+
 if __name__ == "__main__":
     with open('data/PATHS.json') as file:
         PATHS = json_load(file)
@@ -14,6 +48,6 @@ if __name__ == "__main__":
     model = Model('Guess')
     variables.set_all(model)
 
+
     model.update()
     model.optimize()
-
