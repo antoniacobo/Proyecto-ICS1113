@@ -1,10 +1,12 @@
-from gurobipy import Model, quicksum
+#from gurobipy import Model, quicksum
 from json import load as json_load
 from parameters import ParametersContainer
-from variables import VariablesContainer
+#from variables import VariablesContainer
 
 
-def set_restrictions(model: Model):
+M = 1000000
+
+def set_restrictions(model):
     '''
     Set all constrains to model.
     '''
@@ -30,8 +32,17 @@ def set_restrictions(model: Model):
     '''
 
     '''
-    No llegan productos a una bodega desde otra si no se utiliz ́o transporte.
+    No llegan productos a una bodega desde otra si no se utilizó transporte.
     '''
+    model.addConstrs((quicksum(
+        variables['transportation'][i, j, k, u]
+        for i in parameters['products'].values()
+        for j in parameters['stores'].values()) <=
+        quicksum(variables['binary'][j, k, u] * M
+        for j in parameters['stores'].values())
+        for k in parameters['stores'].values()
+        for u in parameters['transportation'].values()
+        ), name="storage_condition")
 
 
 if __name__ == "__main__":
@@ -39,6 +50,7 @@ if __name__ == "__main__":
         PATHS = json_load(file)
 
     parameters = ParametersContainer(PATHS)
+    print(parameters['products'])
     variables = VariablesContainer(parameters)
 
     model = Model('Guess')

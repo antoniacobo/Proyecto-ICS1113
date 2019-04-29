@@ -18,6 +18,15 @@ class VariablesContainer(dict):
                                 VariablesContainer.__dict__.items()):
             method(self, model, periods)
 
+    def set_binary(self, model: Model, _: int):
+        for t in self.parameters['transportation'].values():
+            name = 'transport_from_{0}_to_{1}_using_{2}'.format(
+                t.from_,
+                t.to,
+                t.id_)
+            self['binary'][t.from_, t.to, t.id_] = model.addVar(
+                vtype=GRB.BINARY, lb=0, name=name)
+
     def _set_tranportation(self, model: Model, _: int):
         for p in self.parameters['products'].values():
             for t in self.parameters['transportation'].values():
