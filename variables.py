@@ -20,7 +20,7 @@ class VariablesContainer(dict):
 
     def _set_tranportation(self, model: Model, _: int):
         for p in self.parameters['products'].values():
-            for t in self.parameters['transportation'].values:
+            for t in self.parameters['transportation'].values():
                 name = 'transport_{0}_from_{1}_to_{2}_using_{3}'.format(
                     p.id_,
                     t.from_,
