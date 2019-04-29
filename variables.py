@@ -7,25 +7,8 @@ class VariablesContainer(dict):
     def __init__(self, parameters: ParametersContainer):
         super().__init__()
         self.parameters = parameters
-        self['transportation'] = {
-            'port': {
-                'warehouse': set(),  # from port to warehouse
-                'store': set(),  # from port to store
-                'outlet': set()  # from port to outlet
-            },
-            'warehouse': {
-                'warehouse': set(),  # from warehouse to warehouse
-                'store': set(),  # from warehouse to store
-                'outlet': set()  # from warehouse to outlet
-            },
-            'store': {
-                'warehouse': set(),  # from store to warehouse
-                'store': set(),  # from store to store
-                'outlet': set()  # from store to outlet
-            }}
-        self['storage'] = {
-            'stores': set(),
-            'warehouse': set()}
+        self['transportation'] = dict()
+        self['storage'] = dict()
 
     def set_all(self, model: Model, periods: int=12):
         '''
@@ -37,13 +20,16 @@ class VariablesContainer(dict):
 
     def _set_tranportation(self, model: Model, _: int):
         for p in self.parameters['products'].values():
-            for t in self.parameters['transportation'].values():
+            for t in self.parameters['transportation'].values:
                 name = 'transport_{0}_from_{1}_to_{2}_using_{3}'.format(
                     p.id_,
                     t.from_,
                     t.to,
                     t.id_)
-                self['transportation'][t.from_][t.to] = model.addVar(
+                self['transportation'][t.from_,
+                                       t.to,
+                                       t.id_,
+                                       p.id_] = model.addVar(
                     vtype=GRB.INTEGER, lb=0, name=name)
 
     def _set_storage(self, model: Model, periods: int):
@@ -54,14 +40,10 @@ class VariablesContainer(dict):
                         p.id_,
                         s.id_,
                         i)
-                    self['storage']['stores'] = model.addVar(
+                    self['storage'][p.id_,
+                                    s.id_,
+                                    i] = model.addVar(
                         vtype=GRB.INTEGER, lb=0, name=name)
-                name = 'stock_{0}_at_warehouse_in_{1}'.format(
-                    p.id_,
-                    i)
-                self['storage']['warehouse'] = model.addVar(
-                    vtype=GRB.INTEGER, lb=0, name=name)
-
 
 if __name__ == "__main__":
     with open('data/PATHS.json') as file:

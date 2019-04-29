@@ -81,13 +81,13 @@ class ParametersContainer(defaultdict):
             self[name.lower()][transportation.id_] = transportation
         elif name == 'DEMAND':
             demand = Demand(*data)
-            self[name.lower()][demand.period,
+            self[name.lower()][demand.product_id,
                                demand.store_id,
-                               demand.product_id] = demand
+                               demand.period] = demand
         elif name == 'ARRIVALS':
             arrival = Arrival(*data)
-            self[name.lower()][arrival.period,
-                               arrival.product_id] = arrival
+            self[name.lower()][arrival.product_id,
+                               arrival.period] = arrival
 
         else:
             raise TypeError(f"invalid parameter of type '{name}'")
