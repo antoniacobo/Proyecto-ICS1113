@@ -20,7 +20,7 @@ parameters = ParametersContainer(PATH)
 ### ¿Dónde están las instancias?
 
 ```python
-parameters['nombre_clase']  # este es un `set` con todas las instancias de dicha clase
+parameters['nombre_clase']  # este es un `dict` con todas las instancias de dicha clase
 ```
 
 ### Cargar las variables.

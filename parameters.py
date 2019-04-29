@@ -56,7 +56,7 @@ class Arrival:
 
 class ParametersContainer(defaultdict):
     def __init__(self, PATHS: dict):
-        super().__init__(set)
+        super().__init__(dict)
         self._load_all(PATHS)
 
     def _load_all(self, PATHS: dict):
@@ -64,25 +64,33 @@ class ParametersContainer(defaultdict):
             with open(path, 'r') as file:
                 file.readline()  # skip header
                 for line in file.readlines():
-                    self[name.lower()].add(self._new_parameter(name, line))
+                    self._new_entity(name, line)
 
-    @staticmethod
-    def _new_parameter(name: str, csv_line: str):
+    def _new_entity(self, name: str, csv_line: str):
         data = map(lambda x: int(x) if x.isdecimal() else x,
                    csv_line.strip().split(','))
 
         if name == 'PRODUCTS':
-            return Product(*data)
+            product = Product(*data)
+            self[name.lower()][product.id_] = product
         elif name == 'STORES':
-            return Store(*data)
+            store = Store(*data)
+            self[name.lower()][store.id_] = store
         elif name == 'TRANSPORTATION':
-            return Transportation(*data)
+            transportation = Transportation(*data)
+            self[name.lower()][transportation.id_] = transportation
         elif name == 'DEMAND':
-            return Demand(*data)
+            demand = Demand(*data)
+            self[name.lower()][demand.period,
+                               demand.store_id,
+                               demand.product_id] = demand
         elif name == 'ARRIVALS':
-            return Arrival(*data)
+            arrival = Arrival(*data)
+            self[name.lower()][arrival.period,
+                               arrival.product_id] = arrival
 
-        raise TypeError(f"invalid parameter of type '{name}'")
+        else:
+            raise TypeError(f"invalid parameter of type '{name}'")
 
 
 if __name__ == "__main__":

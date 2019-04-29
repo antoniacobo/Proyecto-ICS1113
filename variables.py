@@ -36,8 +36,8 @@ class VariablesContainer(dict):
             method(self, model, periods)
 
     def _set_tranportation(self, model: Model, _: int):
-        for p in self.parameters['products']:
-            for t in self.parameters['transportation']:
+        for p in self.parameters['products'].values():
+            for t in self.parameters['transportation'].values():
                 name = 'transport_{0}_from_{1}_to_{2}_using_{3}'.format(
                     p.id_,
                     t.from_,
@@ -48,8 +48,8 @@ class VariablesContainer(dict):
 
     def _set_storage(self, model: Model, periods: int):
         for i in range(periods):
-            for p in self.parameters['products']:
-                for s in self.parameters['stores']:
+            for p in self.parameters['products'].values():
+                for s in self.parameters['stores'].values():
                     name = 'stock_{0}_at_{1}_in_{2}'.format(
                         p.id_,
                         s.id_,
