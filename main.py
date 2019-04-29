@@ -15,7 +15,6 @@ def set_restrictions(model: Model):
     satisfaciendo, a la vez, la demanda de cada una.
     '''
 
-
     '''
     No es posible superar la capacidad m ́axima de cada tienda.
     '''

@@ -45,6 +45,7 @@ class VariablesContainer(dict):
                                     i] = model.addVar(
                         vtype=GRB.INTEGER, lb=0, name=name)
 
+
 if __name__ == "__main__":
     with open('data/PATHS.json') as file:
         PATHS = json_load(file)
