@@ -14,7 +14,7 @@ model = Model('nombre_modelo')
 with open('data/PATHS.json') as file:
   PATHS = json.load(file)
 
-parameters = ParametersContainer(PATH)
+parameters = ParametersContainer(PATHS)
 ```
 
 ### ¿Dónde están las instancias?
