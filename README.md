@@ -21,6 +21,8 @@ parameters = ParametersContainer(PATHS)
 
 ```python
 parameters['nombre_clase']  # este es un `dict` con todas las instancias de dicha clase
+
+parameters['nombre_clase'][llaves]  # para acceder a la entidad del tipo `nombre_clase` cuyas llaves son la tupla `llaves`
 ```
 
 ### Cargar las variables.
@@ -40,7 +42,8 @@ model.addVar(variable)  # esto es lo que hace `VariablesContainer` para añadir 
 variables['transportation']  # acá se encuentran las variables que indican cuánto producto se transporta de un lugar a otro
 variables['storage']  # acá se enceuntran las variables que indican cuánto producto se almacena en cada lugar
 
-variables['transportation']['desde']['hasta']  # esto es un ejemplo
+variables['transportation']['desde']['hasta']  # para acceder a las cantidades transportadas desde `desde` hasta `hasta`
+variables['storage']['tipo_lugar']  # para acceder a las cantidades almacenadas en los lugares del tipo `tipo_lugar`
 ```
 
 ### Añadir restricciones.
