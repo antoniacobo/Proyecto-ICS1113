@@ -9,6 +9,7 @@ class VariablesContainer(dict):
         self.parameters = parameters
         self['transportation'] = dict()
         self['storage'] = dict()
+        self['outlet'] = dict()
 
     def set_all(self, model: Model, periods: int=12):
         '''
@@ -33,18 +34,19 @@ class VariablesContainer(dict):
         for p in self.parameters['products'].values():
             for t in self.parameters['transportation'].values():
                 for time in range(12):
-                    name = 'transport_{0}_from_{1}_to_{2}_using_{3}_in{4}'.format(
-                        p.id_,
-                        t.from_,
-                        t.to,
-                        t.id_,
-                        time)
-                    self['transportation'][t.from_,
-                                           t.to,
-                                           t.id_,
-                                           p.id_,
-                                           time] = model.addVar(
-                        vtype=GRB.INTEGER, lb=0, name=name)
+                    if t.to != 'outlet':
+                        name = 'transport_{0}_from_{1}_to_{2}_using_{3}_in{4}'.format(
+                            p.id_,
+                            t.from_,
+                            t.to,
+                            t.id_,
+                            time)
+                        self['transportation'][t.from_,
+                                               t.to,
+                                               t.id_,
+                                               p.id_,
+                                               time] = model.addVar(
+                            vtype=GRB.INTEGER, lb=0, name=name)
 
     def _set_storage(self, model: Model, periods: int):
         for i in range(periods):
@@ -58,6 +60,19 @@ class VariablesContainer(dict):
                                     s.id_,
                                     i] = model.addVar(
                         vtype=GRB.INTEGER, lb=0, name=name)
+
+    def _set_outlet(self, model: Model):
+        for p in self.parameters['products'].values():
+            for t in self.parameters['transportation'].values():
+                for time in range(12):
+                    if t.to == 'outlet':
+                        name = f"transport_{p.id_}_from_{t.from_}_to{t.to}_" \
+                               f"using_{t.id_}_in_{time}"
+                        self['outlet'][p.id_,
+                                       t.from_,
+                                       t.id_,
+                                       time] = model.addVar(
+                            vtype=GRB.INTEGER, lb=0, name=name)
 
 
 if __name__ == "__main__":
