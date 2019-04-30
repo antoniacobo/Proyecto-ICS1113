@@ -34,14 +34,11 @@ def set_restrictions(model):
     '''
     No llegan productos a una bodega desde otra si no se utilizó transporte.
     '''
-    model.addConstrs((quicksum(
-        variables['transportation'][i, j, k, u]
-        for i in parameters['products'].values()
-        for j in parameters['stores'].values()) <=
-        quicksum(variables['binary'][j, k, u] * M
-        for j in parameters['stores'].values())
-        for k in parameters['stores'].values()
-        for u in parameters['transportation'].values()
+    model.addConstrs((variables['transportation'][i, j, k, u] <=
+        variables['binary'][j, k, u] * M
+        for j in range(len(parameters['stores'].values()))
+        for k in range(len(parameters['stores'].values()))
+        for u in range(len(parameters['transportation'].values()))
         ), name="storage_condition")
 
 
