@@ -5,6 +5,7 @@ from parameters import ParametersContainer
 
 
 M = 1000000
+periods = 12
 
 def set_restrictions(model):
     '''
@@ -20,7 +21,12 @@ def set_restrictions(model):
     '''
     No es posible superar la capacidad m ́axima de cada tienda.
     '''
-
+    model.addConstr((quicksum(
+        parameters['products'][pid].volume_m2 * variables['storage'][
+            pid, sid, t] for pid in parameters['products']) <=
+                     variables['storage'][pid, sid, t].capacity_m2 for sid in
+                     variables['storage'] for t in range(periods) for pid in
+                     parameters['products']), 'C2')
     '''
     Los medios de transporte no pueden transportar
     m ́as que su capacidad volum ́etrica m ́axima.
@@ -34,11 +40,13 @@ def set_restrictions(model):
     '''
     No llegan productos a una bodega desde otra si no se utilizó transporte.
     '''
-    model.addConstrs((variables['transportation'][i, j, k, u] <=
-        variables['binary'][j, k, u] * M
-        for j in range(len(parameters['stores'].values()))
-        for k in range(len(parameters['stores'].values()))
-        for u in range(len(parameters['transportation'].values()))
+    model.addConstrs((variables['transportation'][i, j, k, u, t] <=
+        variables['binary'][j, k, u, t] * M
+        for i in parameters['products']
+        for j in parameters['stores']
+        for k in parameters['stores']
+        for u in parameters['transportation']
+        for t in range(periods)
         ), name="storage_condition")
 
 
